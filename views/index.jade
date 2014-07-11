@@ -1,7 +1,14 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  fb:login-button(scope="public_profile,email", onlogin="checkLoginState();")
-  div(id="status")
+  div(class="row")
+    div(class="col-md-12")
+      h1= title
+  div(class="row")
+    div(class="col-md-2") Facebook group:  
+    div(class="col-md-2") 
+      input(type='text', id='groupName')
+    div(class="col-md-1")
+      button(class="btn btn-default", id="playButton", type="submit") Play!
+  div(class="row")
+    div(class="col-md-2 col-md-offset-2 alert alert-danger", role="alert", style="display:none", id="groupNameAlert")
