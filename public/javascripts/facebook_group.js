@@ -13,9 +13,6 @@ function checkGroupPermissions(groupId) {
         }
       }
   );
-  FB.api('/me', function(response) {
-    console.log('Successful login for: ' + response.name);
-  });
 }
 
 function loadFeed(response) {
@@ -23,8 +20,24 @@ function loadFeed(response) {
     console.log(response);
     var playlist = $('#playlist');
     $.each(response.data, function(i, val) {
-      var innerDiv = $('<div></div>').
-        append($('<img/>', { src: val.picture}));
+      var link = undefined;
+      if (val.type == "video") {
+        link = val.link;
+      }
+      var innerDiv = $('<li></li>').
+        addClass('row').
+        append($('<img/>', { 
+          src: val.picture,
+          "class": 'col-md-2'
+        })).
+        append($('<div></div>').
+          addClass('col-md-10').
+          append($('<a/>').
+            addClass('row').
+            attr('href', link).
+            text(val.name))
+            
+        );
       playlist.append(innerDiv);
     });
   } else { // Error retrieving
@@ -34,5 +47,6 @@ function loadFeed(response) {
 }
 
 function performRetrieval(groupId) {
+  asyncYoutubeLoad(); 
   checkGroupPermissions(groupId);
 }
