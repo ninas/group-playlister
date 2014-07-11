@@ -1,10 +1,25 @@
 // This is called with the results from from FB.getLoginStatus().
-function statusChangeCallback(response) {
+function statusChangeCallback(response, groupId) {
+  var login = function() { 
+    FB.login(function() { performRetrieval(groupId); }, { scope: "user_groups" }); 
+  };
+
   if (response.status === 'connected') {
-    // Logged into your app and Facebook.
-    testAPI();
+  
+    var permissionsGranted = false;
+    FB.api("/me/permissions", function(permResponse) {
+      $.each(permResponse.data, function(i, val) {
+        if (val['permission'] === 'user_groups' && val['status'] === 'granted') {
+          permissionsGranted = true;
+          return;
+        }
+      });
+      
+      permissionsGranted ? performRetrieval(groupId) : login();
+    });
+
   } else {
-    FB.login();
+    login();
   }
 
 }
@@ -48,12 +63,3 @@ window.fbAsyncInit = function() {
   js.src = "//connect.facebook.net/en_US/sdk.js";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
-
-function testAPI() {
-  console.log('Welcome!  Fetching your information.... ');
-  FB.api('/me', function(response) {
-    console.log('Successful login for: ' + response.name);
-    document.getElementById('status').innerHTML =
-      'Thanks for logging in, ' + response.name + '!';
-  });
-}
