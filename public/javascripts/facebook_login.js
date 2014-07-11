@@ -35,9 +35,14 @@ function checkLoginState() {
     });
   }
   else {
-    $('div#groupNameAlert').text('Please enter a group name').show();  
+    groupInputError("Please enter a group name");
   }
 
+}
+
+function groupInputError (message) {
+  $('#groupInputGroup').addClass('has-error');
+  $('#groupNameAlert').text(message).show();  
 }
 
 window.fbAsyncInit = function() {
@@ -48,10 +53,13 @@ window.fbAsyncInit = function() {
     xfbml      : true,  // parse social plugins on this page
     version    : 'v2.0' // use version 2.0
   });
+  $('#groupNameAlert').hide();
 
   $('button#playButton').click(function() {
-    $('div#groupNameAlert').hide();
+    $('#groupNameAlert').hide();
+    $('#groupInputGroup').removeClass('has-error');
     checkLoginState();
+    return false;
   });
 };
 

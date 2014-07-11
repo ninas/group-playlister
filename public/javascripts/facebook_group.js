@@ -1,20 +1,17 @@
 function checkGroupPermissions(groupId) {
-  console.log('Welcome!  Fetching your information.... ');
   FB.api(
       "/" + groupId,
       function (response) {
         if (response && !response.error) {
-          /* handle the result */
-          console.log("group!");
-        } else {
           console.log(response);
+        } else { // Error retrieving
+          groupInputError('That group doesn\'t exist - the name can be found in the url: www.facebook.com/group/<COPY_ME>'); 
+
         }
       }
   );
   FB.api('/me', function(response) {
     console.log('Successful login for: ' + response.name);
-    document.getElementById('status').innerHTML =
-      'Thanks for logging in, ' + response.name + '!';
   });
 }
 
