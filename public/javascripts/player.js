@@ -29,8 +29,16 @@ function loadFeed(response) {
   }
 }
 
+function playClicked() {
+  console.log("Clicked:");
+  console.log(this);
+  playlistDetails.current = parseInt($(this).attr('id'));
+  loadNextVid();
+}
+
 function createPlaylistItem(pic, link, name, pos) {
     return $('<li></li>').
+    click(playClicked).
     addClass('row').
     addClass('playlistItem').
     attr('id', pos).
@@ -49,11 +57,15 @@ function createPlaylistItem(pic, link, name, pos) {
 
 function loadNextVid() {
   var data = playlistDetails.list[playlistDetails.current]; 
+  console.log("Will try to play "+ data.link);
+  console.log(isYoutube(data.link));
   if (data.link && isYoutube(data.link)) {
-    var id = data.link.split("?v=")[1];
-    loadYoutube(id);
+    var id = data.link.split("?v=")[1].split('&')[0];
+    playYoutubeVideo(id);
   } else {
     console.log("format not yet supported");
+    playlistDetails.current += 1;
+    loadNextVid();
   } 
 }
 
