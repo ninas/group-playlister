@@ -1,5 +1,4 @@
-var youtubeReady = false;
-var player;
+var youtubePlayer;
 
 function asyncYoutubeLoad(){
   var tag = document.createElement('script');
@@ -11,7 +10,7 @@ function asyncYoutubeLoad(){
 function onYouTubePlayerAPIReady() {
   youtubeReady = true;
   //$('#youtube').hide();
-  player = new YT.Player('youtube', {
+  youtubePlayer = new YT.Player('youtube', {
     height: '390',
     width: '640',
     events: {
@@ -22,10 +21,11 @@ function onYouTubePlayerAPIReady() {
 }
 
 function playYoutubeVideo(id) {
-  if (!player) {
+  if (!youtubePlayer) {
     setTimeout(function() { playYoutubeVideo(id); }, 500);
   } else {
-    player.loadVideoById(id);
+    youtubePlayer.loadVideoById(id);
+    $('#soundcloud').hide();
     $('#youtube').show();
   }
 }

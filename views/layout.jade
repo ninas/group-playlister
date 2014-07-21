@@ -3,12 +3,20 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href="/stylesheets/bootstrap-theme.min.css")
-    link(rel='stylesheet', href="/stylesheets/bootstrap.min.css")
+    link(rel='stylesheet', href="/components/bootstrap/dist/css/bootstrap-theme.min.css")
+    link(rel='stylesheet', href="/components/bootstrap/dist/css/bootstrap.min.css")
+
   body
     block content
-    script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js")
+    script(src="/components/jquery/dist/jquery.min.js")
+    script(src="/components/bootstrap/dist/js/bootstrap.min.js")
     script(src='/javascripts/facebook_login.js')
     script(src='/javascripts/facebook_group.js')
     script(src='/javascripts/player.js')
     script(src='/javascripts/youtube.js')
+    script(src='/components/typeahead.js/dist/typeahead.bundle.min.js')
+    script(src='/components/typeahead.js/dist/typeahead.jquery.min.js')
+    script(src='/components/typeahead.js/dist/bloodhound.min.js')
+    script(src='//connect.soundcloud.com/sdk.js')
+    script(src="https://w.soundcloud.com/player/api.js")    
+    script(src='/javascripts/soundcloud.js')

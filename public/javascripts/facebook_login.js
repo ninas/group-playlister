@@ -1,7 +1,7 @@
 // This is called with the results from from FB.getLoginStatus().
 function statusChangeCallback(response, groupId) {
   var login = function() { 
-    FB.login(function() { performRetrieval(groupId); }, { scope: "user_groups" }); 
+    FB.login(function() { populateGroupNames(); }, { scope: "user_groups" }); 
   };
 
   if (response.status === 'connected') {
@@ -15,7 +15,7 @@ function statusChangeCallback(response, groupId) {
         }
       });
       
-      permissionsGranted ? performRetrieval(groupId) : login();
+      permissionsGranted ? populateGroupNames() : login();
     });
 
   } else {
@@ -54,15 +54,59 @@ window.fbAsyncInit = function() {
     version    : 'v2.0' // use version 2.0
   });
   $('#groupNameAlert').hide();
-
+  FB.getLoginStatus(function(response) {
+      statusChangeCallback(response, groupName);
+    });
+  
   $('button#playButton').click(function() {
     $('#groupNameAlert').hide();
     $('#groupInputGroup').removeClass('has-error');
-    checkLoginState();
+  //  checkLoginState();
     return false;
   });
 };
 
+function parseGroupsResponse(response, groups){
+    if (response && !response.error) {
+      newItems = []
+      $.each(response.data, function(i, v){
+        groups[v.name] = v.id;
+        newItems.push({ name: v.name });
+      });
+      if (response.next) {
+
+      }
+      return newItems;
+    } else {
+      // fail silently
+    }
+    return []
+}
+
+function populateGroupNames() {
+  var groups = {};
+  
+  var engine = new Bloodhound({
+    local: [],
+    datumTokenizer: function(d) {
+      return Bloodhound.tokenizers.whitespace(d.name);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace
+  });
+      var b = engine.initialize();
+  
+  FB.api('/me/groups', function(response){
+    engine.add(parseGroupsResponse(response, groups));
+  });
+
+  $('#groupName').typeahead(null, {
+    name: 'groups',
+    displayKey: 'name',
+    source: engine.ttAdapter()
+  });
+      
+
+};
 // Load the SDK asynchronously
 (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];

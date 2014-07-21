@@ -62,6 +62,9 @@ function loadNextVid() {
   if (data.link && isYoutube(data.link)) {
     var id = data.link.split("?v=")[1].split('&')[0];
     playYoutubeVideo(id);
+  } else if (data.link && isSoundCloud(data.link)) {
+    console.log("Playing soundcloud");
+    playSC(data.link);
   } else {
     console.log("format not yet supported");
     playlistDetails.current += 1;

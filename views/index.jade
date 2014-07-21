@@ -4,15 +4,13 @@ block content
   div(class="row")
     div(class="col-md-12")
       h1 Group Playlister
-  form(class="form-inline row", role="form")
-    div(class="form-group col-md-4" id="groupInputGroup")
-      div(class="input-group input-group-lg") 
-        span(class="input-group-addon") Facebook group 
-        if groupName
-          input(type='text', class="form-control", placeholder="group id", id='groupName', value= groupName)
-        else
-          input(type='text', class="form-control", placeholder="group id", id='groupName')
-    span(class="padding col-md-1")
+  div(class="col-md-4" id="groupInputGroup")
+    span Facebook group 
+    if groupName
+      input(type='text', class="typeahead", placeholder="group id", id='groupName', value= groupName)
+    else
+      input(type='text', class="typeahead", placeholder="group id", id='groupName')
+  span(class="padding col-md-1")
       button(class="btn btn-primary btn-lg", id="playButton") Play!
   div(class="row")
     div(class="col-md-4 text-right error-text-red")
@@ -23,4 +21,8 @@ block content
   div(class="row")
     div(class="col-md-8")
       div(id="youtube")
+      div(id="soundcloud")
+
+
+
     ul(class="col-md-4", id="playlist")
