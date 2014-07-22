@@ -66,47 +66,6 @@ window.fbAsyncInit = function() {
   });
 };
 
-function parseGroupsResponse(response, groups){
-    if (response && !response.error) {
-      newItems = []
-      $.each(response.data, function(i, v){
-        groups[v.name] = v.id;
-        newItems.push({ name: v.name });
-      });
-      if (response.next) {
-
-      }
-      return newItems;
-    } else {
-      // fail silently
-    }
-    return []
-}
-
-function populateGroupNames() {
-  var groups = {};
-  
-  var engine = new Bloodhound({
-    local: [],
-    datumTokenizer: function(d) {
-      return Bloodhound.tokenizers.whitespace(d.name);
-    },
-    queryTokenizer: Bloodhound.tokenizers.whitespace
-  });
-      var b = engine.initialize();
-  
-  FB.api('/me/groups', function(response){
-    engine.add(parseGroupsResponse(response, groups));
-  });
-
-  $('#groupName').typeahead(null, {
-    name: 'groups',
-    displayKey: 'name',
-    source: engine.ttAdapter()
-  });
-      
-
-};
 // Load the SDK asynchronously
 (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
