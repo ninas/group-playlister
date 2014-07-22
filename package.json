@@ -19,5 +19,8 @@
     "morgan": "~1.0.0",
     "static-favicon": "~1.0.0",
     "superagent": "^0.18.1"
+  },
+  "scripts": {
+      "postinstall": "./node_modules/bower/bin/bower install"
   }
 }
