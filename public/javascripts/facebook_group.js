@@ -23,14 +23,9 @@ function pullFBFeed(groupId){
   }
 }
 
-function getGroupNames(){
-
-};
-
 function performRetrieval(groupId) {
   asyncYoutubeLoad(); 
   loadSoundCloud();
   
-  getGroupNames();
   checkGroupPermissions(groupId);
 }

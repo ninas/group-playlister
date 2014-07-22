@@ -27,12 +27,10 @@ function statusChangeCallback(response, groupId) {
 // This function is called when someone finishes with the Login
 // Button.  See the onlogin handler attached to it in the sample
 // code below.
-function checkLoginState() {
+function playGroup() {
   var groupName = $('input#groupName').val();
   if (groupName && groupName.length > 0) { 
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response, groupName);
-    });
+    performRetrieval(groupNameToId[groupName]); // global declared in autocomplete.js
   }
   else {
     groupInputError("Please enter a group name");
@@ -61,7 +59,7 @@ window.fbAsyncInit = function() {
   $('button#playButton').click(function() {
     $('#groupNameAlert').hide();
     $('#groupInputGroup').removeClass('has-error');
-  //  checkLoginState();
+    playGroup();
     return false;
   });
 };
